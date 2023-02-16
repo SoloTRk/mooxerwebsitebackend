@@ -1,0 +1,36 @@
+<%- include('./includes/header.ejs') %>
+
+<div
+  style="
+    width: 100%;
+    color: black;
+    padding: 30px 0;
+    text-align: center;
+    display: flexbox;
+    font-family: Arial;
+    background-color: #d7ccc8;
+  "
+>
+  <div>
+    <h4>Firstname: <%= sender %></h4>
+    <hr />
+  </div>
+  <div>
+    <h4>Email: <%= email %></h4>
+    <hr />
+  </div>
+  <div>
+    <h4>Phone: <%= phoneNumber %></h4>
+    <hr />
+  </div>
+  <div>
+    <h4>Subject: <%= subject %></h4>
+    <hr />
+  </div>
+  <div>
+    <h4>Message: <%= content %></h4>
+    <hr />
+  </div>
+</div>
+
+<%- include('./includes/footer.ejs') %>
