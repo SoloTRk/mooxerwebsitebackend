@@ -1,8 +1,8 @@
 const CustomError = require("../error/CustomError");
-const { sendEmail } = require("../email");
+const { sendEmailCWU, sendEmailWWU } = require("../utils/email");
 
 const contactwithusService = async ({ information }) => {
-  sendEmail(
+  sendEmailCWU(
     `${information.sender}`,
     `${information.email}`,
     `${information.subject}`,
@@ -13,6 +13,33 @@ const contactwithusService = async ({ information }) => {
   return { success: true, data: { information } };
 };
 
+const workwithusService = async ({ information }) => {
+  console.log(information);
+  sendEmailWWU(
+    information.firstname,
+    information.lastname,
+    information.email,
+    information.phone,
+    information.country,
+    information.adress,
+    information.position,
+    information.additionalInfo,
+    information.file
+  );
+  return { success: true };
+};
+
+const denemeService = async (file) => {
+  file.mv("./uploads/" + file.name, function (err, result) {
+    if (err) throw err;
+    return { success: true };
+  });
+  console.log(file.name);
+  // return { success: true };
+};
+
 module.exports = {
   contactwithusService,
+  workwithusService,
+  denemeService,
 };

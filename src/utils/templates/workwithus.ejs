@@ -1,0 +1,54 @@
+<%- include('./includes/header.ejs') %>
+
+<div
+  style="
+    width: 100%;
+    color: black;
+    padding: 30px 0;
+    text-align: center;
+    display: flexbox;
+    font-family: Arial;
+    background-color: #d7ccc8;
+  "
+>
+  <div>
+    <h4>Firstname: <%= firstname %></h4>
+    <hr />
+  </div>
+  <div>
+    <h4>Lastname: <%= lastname %></h4>
+    <hr />
+  </div>
+  <div>
+    <h4>Email: <%= email %></h4>
+    <hr />
+  </div>
+  <div>
+    <h4>Phone: <%= phone %></h4>
+    <hr />
+  </div>
+  <div>
+    <h4>Country: <%= country %></h4>
+    <hr />
+  </div>
+  <div>
+    <h4>Adress: <%= adress %></h4>
+    <hr />
+  </div>
+  <div>
+    <h4>Position: <%= position %></h4>
+    <hr />
+  </div>
+  <div>
+    <h4>Additional Info: <%= additionalInfo %></h4>
+    <hr />
+  </div>
+  <div>
+    <a href="http://localhost:5000/public/uploads/<%= filename %>" download>
+      DOWNLOAD CV
+  </div>
+  
+  </a>
+</div>
+
+<%- include('./includes/footer.ejs') %>
