@@ -2,12 +2,13 @@ const nodemailer = require("nodemailer");
 const ejs = require("ejs");
 const CustomError = require("../error/CustomError");
 const { dirname } = require("path");
+const { hashCode } = require("./hashing/hashCode");
 
 const transport = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "", // MOOXER mail adress
-    pass: "ufdtyiwoslqjfnnv",
+    user: "testf426@gmail.com", // MOOXER mail adress
+    pass: "hkxcffozqcodxvid",
   },
 });
 
@@ -35,7 +36,6 @@ const sendEmailCWU = (sender, email, subject, phoneNumber, content) => {
 
   if (phoneRegex.test(phoneNumber)) {
   } else {
-    console.log("here");
     throw new CustomError(400, "Phone number not matching");
   }
 
@@ -46,20 +46,17 @@ const sendEmailCWU = (sender, email, subject, phoneNumber, content) => {
     { sender, email, subject, phoneNumber, content },
     (err, data) => {
       if (err) {
-        console.log(err);
       } else {
         var mailOptions = {
           from: sender,
-          to: "", // MOOXER mail adress
+          to: "testf426@gmail.com", // MOOXER mail adress
           subject: subject,
           html: data,
         };
 
         transport.sendMail(mailOptions, (error, info) => {
           if (error) {
-            return console.log(error);
           }
-          console.log("Message sent: %s", info.messageId);
         });
       }
     }
@@ -77,7 +74,6 @@ const sendEmailWWU = (
   additionalInfo,
   file
 ) => {
-  console.log(file);
   if (firstname === "") throw new CustomError(400, "Please check your name!");
 
   if (lastname === "")
@@ -101,7 +97,6 @@ const sendEmailWWU = (
 
   if (phoneRegex.test(phone)) {
   } else {
-    console.log("here");
     throw new CustomError(400, "Phone number not matching");
   }
 
@@ -118,11 +113,17 @@ const sendEmailWWU = (
   if (file === "")
     throw new CustomError(400, "Please check your additionalInfo!");
 
-  file.mv("./src/public/uploads/" + file.name, function (err, result) {
-    if (err) throw err;
-    console.log("object");
-  });
-  const filename = file.name;
+  if (file.mimetype !== "application/pdf")
+    throw new CustomError(400, "Please enter cv in correct format");
+
+  file.mv(
+    "./src/public/uploads/" + file.name.hashCode() + ".pdf",
+    function (err, result) {
+      if (err) throw err;
+    }
+  );
+  const filename = file.name.hashCode();
+  const PORT = process.env.PORT;
   ejs.renderFile(
     __dirname + "/templates/workwithus.ejs",
     {
@@ -135,24 +136,21 @@ const sendEmailWWU = (
       position,
       additionalInfo,
       filename,
-      BASE_URL: "http://localhost:5000",
+      BASE_URL: `http://localhost:${PORT}`,
     },
     (err, data) => {
       if (err) {
-        console.log(err);
       } else {
         var mailOptions = {
           from: `${email}`,
-          to: "", // MOOXER mail address
+          to: "testf426@gmail.com", // MOOXER mail address
           subject: additionalInfo,
           html: data,
         };
 
         transport.sendMail(mailOptions, (error, info) => {
           if (error) {
-            return console.log(error);
           }
-          console.log("Message sent: %s", info.messageId);
         });
       }
     }

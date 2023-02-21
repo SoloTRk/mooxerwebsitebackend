@@ -14,7 +14,6 @@ const contactwithusService = async ({ information }) => {
 };
 
 const workwithusService = async ({ information }) => {
-  console.log(information);
   sendEmailWWU(
     information.firstname,
     information.lastname,
@@ -34,8 +33,6 @@ const denemeService = async (file) => {
     if (err) throw err;
     return { success: true };
   });
-  console.log(file.name);
-  // return { success: true };
 };
 
 module.exports = {
