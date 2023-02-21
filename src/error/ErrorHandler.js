@@ -1,5 +1,4 @@
 module.exports = (err, req, res, next) => {
-  console.log(err);
   // Custom errors
   if (err.status < 1000) {
     res.status(err.status).json({ status: err.status, message: err.message });

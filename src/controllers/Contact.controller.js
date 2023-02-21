@@ -17,6 +17,7 @@ class ContactController {
       phoneNumber,
       content,
     };
+
     const response = await contactwithusService({ information });
 
     res.json(response);
@@ -35,7 +36,7 @@ class ContactController {
     } = req.body;
 
     const file = req.files.cv;
-    console.log(file);
+
     const information = {
       firstname,
       lastname,
